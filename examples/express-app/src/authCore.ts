@@ -1,5 +1,9 @@
-import { createAuthCore, JwtTokenProvider } from "service-auth-core";
-import { mockDb } from "./mockDb";
+import {
+  AdditionalClaims,
+  createAuthCore,
+  JwtTokenProvider,
+} from "service-auth-core";
+import { mockDb } from "./mockDb.js";
 
 const credentialChecker = {
   async checkUserNamePassword(username: string, passwordHash: string) {
@@ -31,6 +35,16 @@ const roleStampProvider = {
   },
 };
 
+const additionalClaimsProvider = {
+  async getAdditionalClaims(input: {
+    userId: string;
+    principal: string;
+  }): Promise<AdditionalClaims> {
+    console.log("Additionalclaims provider called.");
+    return mockDb.getAdditionalClaims(input.userId);
+  },
+};
+
 const tokenProvider = new JwtTokenProvider({
   alg: "HS256",
   secret: process.env.AUTH_SECRET || "dev-secret-change-me",
@@ -49,6 +63,7 @@ export const authCore = createAuthCore(
     roleProvider,
     roleStampProvider,
     roleVersionProvider,
+    additionalClaimsProvider,
     tokenProvider,
   },
 );

@@ -1,10 +1,10 @@
 import express from "express";
-import { authCore } from "./authCore";
+import { authCore } from "./authCore.js";
 import {
   requireAllRoles,
   requireAnyRole,
   requireAuth,
-} from "../../../dist/index.mjs";
+} from "../../../src/index.js";
 
 const app = express();
 app.use(express.json());
@@ -34,6 +34,7 @@ app.post("/login", async (req, res) => {
     roles: r.roles,
     roleStamp: r.roleStamp,
     roleVersion: r.roleVersion,
+    adx: r.adx,
   });
 });
 

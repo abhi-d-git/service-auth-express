@@ -1,14 +1,6 @@
 import type { TokenPayload } from "service-auth-core";
 
 // ---- Express Request augmentation (req.auth) ----
-declare global {
-  namespace Express {
-    interface Request {
-      auth?: AuthContext;
-    }
-  }
-}
-export {};
 
 export type RequiredRoles = {
   anyRoles?: string[];
@@ -22,6 +14,7 @@ export type AuthContext = {
   roleStamp?: string;
   roleVersion?: number;
   claims: TokenPayload;
+  adx?: any;
   token: string;
 };
 
@@ -83,3 +76,12 @@ export type RequireAuthOptions = {
     req: any,
   ) => void;
 };
+
+declare global {
+  namespace Express {
+    interface Request {
+      auth?: AuthContext;
+    }
+  }
+}
+export {};

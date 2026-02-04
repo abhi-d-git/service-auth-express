@@ -5,6 +5,7 @@ export type UserRecord = {
   roles: string[];
   roleVersion: number;
   roleStamp: string;
+  data: any;
 };
 
 const users: Record<string, UserRecord> = {
@@ -15,6 +16,7 @@ const users: Record<string, UserRecord> = {
     roles: ["ADMIN", "CUSTOMER_READ"],
     roleVersion: 3,
     roleStamp: "etag-u1-v3",
+    data: { id: "tenant-1" },
   },
   john: {
     userId: "u-2",
@@ -23,6 +25,7 @@ const users: Record<string, UserRecord> = {
     roles: ["CUSTOMER_READ"],
     roleVersion: 1,
     roleStamp: "etag-u2-v1",
+    data: { id: "tenant-1" },
   },
 };
 
@@ -41,5 +44,11 @@ export const mockDb = {
   async getRoleStamp(userId: string) {
     const u = Object.values(users).find((x) => x.userId === userId);
     return u?.roleStamp ?? "etag-0";
+  },
+
+  async getAdditionalClaims(userId: string) {
+    const u = Object.values(users).find((x) => x.userId === userId);
+    console.log("getAdditionalClaims : " + u);
+    return u?.data ?? undefined;
   },
 };
