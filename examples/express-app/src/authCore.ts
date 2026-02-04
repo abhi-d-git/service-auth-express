@@ -40,7 +40,6 @@ const additionalClaimsProvider = {
     userId: string;
     principal: string;
   }): Promise<AdditionalClaims> {
-    console.log("Additionalclaims provider called.");
     return mockDb.getAdditionalClaims(input.userId);
   },
 };

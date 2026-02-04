@@ -48,7 +48,6 @@ export const mockDb = {
 
   async getAdditionalClaims(userId: string) {
     const u = Object.values(users).find((x) => x.userId === userId);
-    console.log("getAdditionalClaims : " + u);
     return u?.data ?? undefined;
   },
 };
